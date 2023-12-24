@@ -7,9 +7,9 @@ def my_m_and_a(conten1, content2, content3):
 
     Merge(CleanedData1, CleanedData2, CleanedData3)
 
+    # csv_to_sql('merged.csv', 'your_database_name.db', 'table_name')
 
-
-
-my_m_and_a('only_wood_customer_us_1.csv',
-           'only_wood_customer_us_2.csv',
-           'only_wood_customer_us_3.csv')
+if __name__ == '__main__':
+    my_m_and_a('only_wood_customer_us_1.csv',
+               'only_wood_customer_us_2.csv',
+               'only_wood_customer_us_3.csv')
