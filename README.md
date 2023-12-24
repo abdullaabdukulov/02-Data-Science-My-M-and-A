@@ -1,36 +1,5 @@
-# 02-Data-Science-My-M-and-A
+# Welcome to my 02-Data-Science-My-M-and-A
 
-
-<div class="row">
-<div class="col tab-content">
-<div class="tab-pane active show" id="subject" role="tabpanel">
-<div class="row">
-<div class="col-md-12 col-xl-12">
-<div class="markdown-body">
-<p class="text-muted m-b-15">
-</p><h1>My M And A</h1>
-<p>Remember to git add &amp;&amp; git commit &amp;&amp; git push each exercise!</p>
-<p>We will execute your function with our test(s), please DO NOT PROVIDE ANY TEST(S) in your file</p>
-<p>For each exercise, you will have to create a folder and in this folder, you will have additional files that contain your work. Folder names are provided at the beginning of each exercise under <code>submit directory</code> and specific file names for each exercise are also provided at the beginning of each exercise under <code>submit file(s)</code>.</p>
-<hr>    
-<table>
-<thead>
-<tr>
-<th>My M And A</th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Submit directory</td>
-<td>.</td>
-</tr>
-<tr>
-<td>Submit files</td>
-<td>my_m_and_a.py - my_ds_babel.py</td>
-</tr>
-</tbody>
-</table>
 <h3>Description</h3>
 <p>You've worked as a <code>Junior Data Engineer</code> at <code>Plastic Free Boutique</code> for three months.</p>
 <p>Your first mission was to build a strong, robust, and scalable <code>customers</code> database for the exponential growth the company will soon have. Your manager is delighted.</p>
@@ -65,20 +34,23 @@
 2# Import your function from my_ds_babel to save the CSV's content into SQL.</p>
 <h2>VERY IMPORTANT</h2>
 <p>We want to move on after this merge &amp; acquisition; we don't want to keep their <code>.csv</code>; if they are seen in your repository during your 1-1 meeting (Peer Review), it will be considered a fail for this project.</p>
-<p><strong>Example00</strong></p>
-<pre class=" language-plain"><code class=" language-plain">merged_csv = my_m_and_a(content_database_1, content_database_2, content_database_3)
-my_ds_babel.csv_to_sql(merged_csv, 'plastic_free_boutique.sql', 'customers')
-</code></pre>
-<p><em>Tip</em>
-Google: .gitignore file :-)</p>
 
-<p></p>
-</div>
+## Instalation
 
-</div>
-</div>
-</div>
-<div class="tab-pane" id="resources" role="tabpanel">
-</div>
-</div>
-</div>
+**For working with this project you need to install required instalations.**
+`Write this command in your terminal:`
+<br>
+```bash
+    pip install -r requirements.txt
+```
+
+## Usage
+First of all you need to clone this repository.
+<br>
+Then run the `my_m_and_a.py` using this command below
+```bash
+  # write it in your terminal
+  python my_m_and_a.py
+```
+After running go to this file and `uncomment` the code line which located in 10th line and
+rewrite the name of **`databese`** and **`table_name`** in your case. Then **`rerun`** the code.
