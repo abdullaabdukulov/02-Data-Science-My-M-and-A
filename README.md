@@ -1,10 +1,10 @@
 
 
-## My_Mr_Clean
+## My_M_And_A
 
 * First of all I created the necessary repositories and files
 ```
-    repo -> My_Mr_Clean
+    repo -> My_M_And_A
         my_ds_babel.py
         my_m_and_a.py
 ```
