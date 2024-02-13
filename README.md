@@ -55,6 +55,6 @@ We have to import our function from our main code into a new one `from my_m_and_
 
 ## Help
 
-If you have any questions, you can write to me by email
+If you have any questions you can write to me by email
 
 > mirabbosminavarov@gmail.com
