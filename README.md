@@ -2,12 +2,21 @@
 
 ## My_M_And_A
 
+## Description
+
+This code takes a csv file and reads it using the load_dataset function and returns a dataframe.
+After loading the data my clean function cleans the contents of the csv file.
+Once we have cleared our files, we will combine them into one and transfer them to a new file where the func function will be imported to convert our file to sql format.
+
+## Installation
+
 * First of all I created the necessary repositories and files
 ```
     repo -> My_M_And_A
         my_ds_babel.py
         my_m_and_a.py
 ```
+
 * Secondly, we download all the necessary data in csv format
 ```
     only_wood_customer_us_1.csv
@@ -20,7 +29,6 @@
     pip install db-sqlite3
     pip install tabulate
 ```
-## Description
 
 Well, let's get started. Here we first download and read the contents of the clicked csv using the `def load_dataset(path)` function.
 For easy reading and introduction, I use the tabulate library in the `def pretty_print(df)` function.
