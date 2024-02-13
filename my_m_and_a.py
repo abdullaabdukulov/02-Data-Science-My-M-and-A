@@ -1,5 +1,6 @@
 import pandas as pd
 from tabulate import tabulate
+from my_ds_babel import my_ds_babel_csv_to_sql
 import os
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -49,7 +50,6 @@ def clean_dataset_2(df):
     df['Country'] = 'USA'
 
     return df
-    
 
 def clean_dataset_3(df):
     df["Gender"] = df['Gender'].replace({"string_": "", "boolean_": "", "integer_": "", "0": "Male", "1": "Female", "_": "", "Characterm": "nan"}, regex=True).str.title()
@@ -60,16 +60,17 @@ def clean_dataset_3(df):
     df["Country"] = "USA"
     return df
 
-df_1 = load_dataset_1(data_1)
-df_2 = load_dataset_2(data_2)
-df_3 = load_dataset_3(data_3)
+def my_m_and_a(content_database_1, content_database_2, content_database_3):
+    df_1 = load_dataset_1(content_database_1)
+    df_2 = load_dataset_2(content_database_2)
+    df_3 = load_dataset_3(content_database_3)
 
-clean_df_1 = clean_dataset_1(df_1)
-clean_df_2 = clean_dataset_2(df_2)
-clean_df_3 = clean_dataset_3(df_3)
+    clean_df_1 = clean_dataset_1(df_1)
+    clean_df_2 = clean_dataset_2(df_2)
+    clean_df_3 = clean_dataset_3(df_3)
 
-
-def func():
     merged_df = pd.concat([clean_df_1, clean_df_2, clean_df_3], ignore_index=True)
     return merged_df
 
+merged_df = my_m_and_a(data_1, data_2, data_3)
+my_ds_babel_csv_to_sql(merged_df, db_name='ready.db', table_name='customers')
