@@ -3,7 +3,7 @@ from tabulate import tabulate
 import os
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-# print(BASE_DIR)
+
 data_1 = BASE_DIR + '/only_wood_customer_us_1.csv'
 data_2 = BASE_DIR + '/only_wood_customer_us_2.csv'
 data_3 = BASE_DIR + '/only_wood_customer_us_3.csv'
@@ -68,14 +68,7 @@ clean_df_1 = clean_dataset_1(df_1)
 clean_df_2 = clean_dataset_2(df_2)
 clean_df_3 = clean_dataset_3(df_3)
 
-# print("Cleaned DataFrame 1:")
-# pretty_print(clean_df_1)
 
-# print("\nCleaned DataFrame 2:")
-# pretty_print(clean_df_2)
-
-# print("\nCleaned DataFrame 3:")
-# pretty_print(clean_df_3)
 def func():
     merged_df = pd.concat([clean_df_1, clean_df_2, clean_df_3], ignore_index=True)
     return merged_df
