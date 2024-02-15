@@ -25,6 +25,16 @@ Libraries required to work with this code
     pip install tabulate
 ```
 
+## Library Info
+
+We need the `pandas` library to read the csv file and edit it.
+
+we need the `db-sqlite3` libraryto convert the finished csv file into sql format.
+
+We need the `tabulate` library for easy reading when working with a csv file.
+
+There is also a library `os` for reading the file.
+
 ## Usage
 * After downloading the necessary files and libraries
 ```
