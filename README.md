@@ -1,84 +1,53 @@
-# 02-Data-Science-My-M-and-A
+# Welcome to My M And A
+***
+
+### Task
+
+The challenge revolves around merging three distinct customer databases (content_database_1, content_database_2, and content_database_3) with varying structures and inconsistencies.
+
+Key obstacles include: 1. Diverse Data Structures: Each database differs in format, demanding alignment and standardization. 2. Data Standardization: Inconsistencies in gender representation, column order, and delimiters require harmonization. 3. Data Integrity: Ensuring a unified dataset free from duplications or discrepancies for accurate analysis.
+
+The goal is to leverage the my_m_and_a Python function to process, clean, and merge these databases into a cohesive and standardized dataset suitable for analysis and integration into the Plastic Free Boutique project.
+
+### Description
+
+This Python function, my_m_and_a, is designed to merge three customer databases into a unified dataset for analysis and usage within the Plastic Free Boutique project.
+### How the function works:
+
+The function processes each database file (content_database_1, content_database_2, and content_database_3) following these steps:
 
 
-<div class="row">
-<div class="col tab-content">
-<div class="tab-pane active show" id="subject" role="tabpanel">
-<div class="row">
-<div class="col-md-12 col-xl-12">
-<div class="markdown-body">
-<p class="text-muted m-b-15">
-</p><h1>My M And A</h1>
-<p>Remember to git add &amp;&amp; git commit &amp;&amp; git push each exercise!</p>
-<p>We will execute your function with our test(s), please DO NOT PROVIDE ANY TEST(S) in your file</p>
-<p>For each exercise, you will have to create a folder and in this folder, you will have additional files that contain your work. Folder names are provided at the beginning of each exercise under <code>submit directory</code> and specific file names for each exercise are also provided at the beginning of each exercise under <code>submit file(s)</code>.</p>
-<hr>
-<table>
-<thead>
-<tr>
-<th>My M And A</th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Submit directory</td>
-<td>.</td>
-</tr>
-<tr>
-<td>Submit files</td>
-<td>my_m_and_a.py - my_ds_babel.py</td>
-</tr>
-</tbody>
-</table>
-<h3>Description</h3>
-<p>You've worked as a <code>Junior Data Engineer</code> at <code>Plastic Free Boutique</code> for three months.</p>
-<p>Your first mission was to build a strong, robust, and scalable <code>customers</code> database for the exponential growth the company will soon have. Your manager is delighted.</p>
-<p>We've just acquired a new company, <code>Only Wood Box,</code> which will be a perfect solution for our packaging department. They are experts in making wood packages at a competitive, light, and cheap price.</p>
-<p>Expert in their technology, they didn't believe in the digital world. Despite the decent number of customers, they didn't have to invest in their infrastructure. Before quitting, their engineer told us that at least we had stored all the information; I don't understand what he meant.</p>
-<p>You should use <code>import pandas as pd</code></p>
-<p>Your mission will be to merge their three customers (yes 3 :D) table into ours.</p>
-<ul>
-<li>
-<p><a href="https://storage.googleapis.com/qwasar-public/only_wood_customer_us_1.csv" target="_blank">Table 1</a></p>
-</li>
-<li>
-<p><a href="https://storage.googleapis.com/qwasar-public/only_wood_customer_us_2.csv" target="_blank">Table 2</a></p>
-</li>
-<li>
-<p><a href="https://storage.googleapis.com/qwasar-public/only_wood_customer_us_3.csv" target="_blank">Table 3</a></p>
-</li>
-</ul>
-<h2>Technical description</h2>
-<p>Our database schema:</p>
-<pre class=" language-plain"><code class=" language-plain">"gender" - 'string'
-"firstname" - 'string'
-"Lastname" - 'string'
-"email" - 'string'
-"age" - 'string'
-"city" - 'string'
-"country" - 'string'
-"created_at" - 'string'
-"referral" - 'string'
-</code></pre>
-<p>1# Your function will be called <code>my_m_and_a</code> and receive the 3 <code>CSV</code> content.
-2# Import your function from my_ds_babel to save the CSV's content into SQL.</p>
-<h2>VERY IMPORTANT</h2>
-<p>We want to move on after this merge &amp; acquisition; we don't want to keep their <code>.csv</code>; if they are seen in your repository during your 1-1 meeting (Peer Review), it will be considered a fail for this project.</p>
-<p><strong>Example00</strong></p>
-<pre class=" language-plain"><code class=" language-plain">merged_csv = my_m_and_a(content_database_1, content_database_2, content_database_3)
-my_ds_babel.csv_to_sql(merged_csv, 'plastic_free_boutique.sql', 'customers')
-</code></pre>
-<p><em>Tip</em>
-Google: .gitignore file :-)</p>
+1. **`content_database_1`:**
+   - Reads the CSV file into a DataFrame.
+   - Drops the "UserName" column.
+   - Converts gender values to standardize them as "Male" or "Female".
 
-<p></p>
-</div>
+2. **`content_database_2`:**
+   - Reads the CSV file with a delimiter of ';' and no header.
+   - Splits column 3 into "FirstName" and "LastName".
+   - Reorders columns to match the schema: 'Gender', 'FirstName', 'LastName', 'Email', 'Age', 'City'.
+   - Standardizes gender values as "Male" or "Female".
 
-</div>
-</div>
-</div>
-<div class="tab-pane" id="resources" role="tabpanel">
-</div>
-</div>
-</div>
+3. **`content_database_3`:**
+   - Reads the CSV file using '\\' as the delimiter and no header.
+   - Extracts columns for 'Gender', 'FirstName', 'LastName', 'Email', 'Age', 'City', 'Country'.
+   - Cleans and formats data by removing unnecessary characters and converting data types.
+The function then merges the three processed DataFrames into a single DataFrame, performing additional data cleaning, such as capitalizing city names and ensuring consistent data types. The resulting merged DataFrame contains a consolidated set of customer data ready for further analysis or integration into the Plastic Free Boutique project.
+### Installation
+    1. Clone the project from the Git repository.
+    2. Ensure you have Python installed.
+    3. Place the following files in your project directory:
+        - `my_ds_babel.py`
+        - `all_fault_line.db`
+        - `list_fault_line.csv`
+        - `list_volcano.csv`
+        - `only_wood_customer_us_1.csv`
+        - `only_wood_customer_us_2.csv`
+        - `only_wood_customer_us_3.csv`
+    No need to install dependencies like Pandas or Io.
+
+
+
+### Usage
+To execute the project, use the following command:
+Make sure to replace `content_database_1.csv`, `content_database_2.csv`, and `content_database_3.csv` with the respective paths to the CSV files containing customer data to merge.
