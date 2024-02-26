@@ -1,5 +1,7 @@
 import pandas as pd
-import sqlite3
+
+from my_ds_babel import csv_to_sql
+
 
 def load_dataset_1(path):
     return pd.read_csv(path)
@@ -92,18 +94,11 @@ def my_m_and_a(data_path_1, data_path_2, data_path_3):
     merged_df = pd.concat([clean_df_1, clean_df_2, clean_df_3], ignore_index=True)
     return merged_df
 
-data_path_1 = "only_wood_customer_us_1.csv"
-data_path_2 = "only_wood_customer_us_2.csv"
-data_path_3 = "only_wood_customer_us_3.csv"
+# data_path_1 = "only_wood_customer_us_1.csv"
+# data_path_2 = "only_wood_customer_us_2.csv"
+# data_path_3 = "only_wood_customer_us_3.csv"
 
 
-def csv_to_sql(csv_content, database, table_name):
-    df = pd.read_csv(csv_content)
-    engine = sqlite3.connect(database)
-    df.to_sql(name=table_name, con=engine, if_exists='replace')
-    print("Successfully converted:)")
-
-merged_csv = my_m_and_a(data_path_1, data_path_2, data_path_3)
-merged_csv.to_csv("merged_dataset.csv", index=False)
-csv_to_sql("merged_dataset.csv", 'plastic_free_boutique.db', 'customers')
+# merged_csv = my_m_and_a(data_path_1, data_path_2, data_path_3)
+# csv_to_sql(merged_csv, 'plastic_free_boutique.db', 'customers')
 
