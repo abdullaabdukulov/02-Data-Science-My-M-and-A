@@ -9,6 +9,10 @@ yeah. i made various of function tho help understand.
 ## Installation
 How to install your project? pip?
 you need install pandas and sqlite3
+
+pip install pandas
+
+pip install sqlite3
 ## Usage
 How does it work?
 python your_file_name.py
