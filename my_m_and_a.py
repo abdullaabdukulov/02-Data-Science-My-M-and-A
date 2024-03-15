@@ -1,114 +1,42 @@
 import pandas as pd
-import my_ds_babel# Import the provided module
+import re
+import sqlite3 as sql
+from my_ds_babel import *
 
 
-def cleaning_first_df(df1):
-    genders_df = {'1': 'Female', '0': 'Male', 'M': 'Male', 'F':'Female'}
-    df1['Gender'].replace(genders_df, inplace=True)
-    
-    df1['FirstName'] = df1['FirstName'].str.replace(r'(\"|\\)', '', regex=True)
-    df1['FirstName'] = df1['FirstName'].str.capitalize()
-    
-    df1['LastName'] = df1['LastName'].str.replace(r'(\"|\\)', '', regex=True)
-    df1['LastName'] = df1['LastName'].str.capitalize()
-    df1['Email'] = df1['Email'].str.lower()
-    df1['Age'] = df1['Age'].astype(str)
-    df1['City'] = df1['City'].str.replace('-', ' ')
-    df1['City'] = df1['City'].str.replace('_', ' ')
-    df1['City'] = df1['City'].str.title()
-    df1['Country'] = 'USA'
-    df1.drop('username', axis=1, inplace=True)
-    df1.dropna(inplace=True)
-    
-    return df1
-    
+def clean_data(data):
+    data['Country'] = "USA"
+    data['City'] = data['City'].apply(lambda x: " ".join(re.findall("[a-zA-Z]+", str(x).title())))
+    data['Email'] = data['Email'].apply(lambda x: str(x).lower() if not pd.isna(x) else "None")
+    data['Email'] = data['Email'].apply(lambda x: x + ".in" if x.endswith('@woodinc') else x)
+    data['Gender'] = data['Gender'].apply(lambda x: 'Male' if x in ['M', '0', 'Male'] else 'Female')
 
-def cleaning_second_df(df2):
-    
-    genders_df = {'1': 'Female', '0': 'Male', 'M': 'Male', 'F':'Female'}
-    df2['Age'] = df2['Age'].str.replace(r'\D', '', regex=True)
-    df2['name'] = df2['name'].str.replace(r'\"', '', regex=True)
-    df2['name'] = df2['name'].str.replace(r'\\', '', regex=True)
-    df2['name'] = df2['name'].str.title()
-    
-    df2[['FirstName', 'LastName']] = df2['name'].str.split(' ', expand=True)
-    df2 = df2.drop('name', axis=1)
-    
-    df2['City'] = df2['City'].str.replace('-', ' ')
-    df2['City'] = df2['City'].str.replace('_', ' ')
-    df2[['FirstName', 'LastName', 'City']] = df2[['FirstName', 'LastName', 'City']].apply(lambda x: x.str.title())
-    
-    # Replace numeric values with corresponding Country names
-    df2['Country'] = 'USA'
-    df2['Gender'].replace(genders_df, inplace=True)
-    df2['Email'] = df2['Email'].str.lower()
-    df2.dropna(inplace=True)
-    
-    return df2
+    data['FirstName'] = data['FirstName'].apply(lambda x: " ".join(re.findall("[a-zA-Z]+", str(x).title())))
+    data['LastName'] = data['LastName'].apply(lambda x: " ".join(re.findall("[a-zA-Z]+", str(x).title())))
+    data['Age'] = data['Age'].apply(lambda x: int("".join(re.findall("\d+", str(x)))) if not pd.isna(x) else None)
+    data['Age'] = data['Age'].astype(str)
+
+    return data
 
 
-def cleaning_third_df(df3):
-    
-    genders_df = {'1': 'Female', '0': 'Male', 'M': 'Male', 'F':'Female'}
-    df3['Gender'] = df3['Gender'].replace(r'string_', '', regex=True)
-    df3['Gender'] = df3['Gender'].replace(r'boolean_', '', regex=True)
-    df3['Gender'] = df3['Gender'].replace(r'integer_', '', regex=True)
-    df3['Gender'] = df3['Gender'].replace(r'character_', '', regex=True)
-    df3['Gender'] = df3['Gender'].replace(genders_df)
-    df3['name'] = df3['name'].str.title()
-    df3[['FirstName', 'LastName']] = df3['name'].str.split(' ', expand=True)
-    df3 = df3.drop('name', axis=1)
-    df3['LastName'] = df3['LastName'].str.replace('"', '')
-    df3['Age'] = df3['Age'].str.replace(r'\D', '', regex=True)
-    df3['City'] = df3['City'].str.replace('-', ' ')
-    df3['City'] = df3['City'].str.replace('_', ' ')
-    cities = {'Diego': 'San Diego', 'York': 'New York', 'Angeles': 'Los Angeles', 'Jose': 'San Jose', 'Worth': 'Fort Worth', 'Antonio': 'San Antonio', 'Francisco': 'San Francisco'}
-    df3['City'] = df3['City'].replace(cities)
-    df3[['FirstName', 'LastName', 'City']] = df3[['FirstName', 'LastName', 'City']].apply(lambda x: x.str.title())
-    df3['Email'] = df3['Email'].str.lower()
-    # Replace numeric values with corresponding Country names
-    df3['Country'] = 'USA'
-    df3.dropna(inplace=True)
-    
-    return df3
+def my_m_and_a(df1, df2, df3):
+    table1 = pd.read_csv(df1).drop(['UserName'], axis=1)
+    data1 = clean_data(table1)
 
-def my_m_and_a(content_database_1, content_database_2, content_database_3):
-    # Load CSV contents into DataFrames
-    colnames_df1 = ['Gender', 'FirstName', 'LastName', 'username', 'Email', 'Age', 'City', 'Country']
-    df1 = pd.read_csv(content_database_1, skiprows=1, names=colnames_df1)
-    
-    colnames_df2 = ['Age', 'City', 'Gender', 'name', 'Email']
-    df2 = pd.read_csv(content_database_2, sep=';', header=None, names=colnames_df2)
-    
-    colnames_df3 = ['Gender', 'name', 'Email', 'Age', 'City', 'Country']
-    df3 = pd.read_csv(content_database_3, skiprows=1, header=None, names=colnames_df3, sep='\t')
-    
-    #To clean df1
-    df_1 = cleaning_first_df(df1)
-    
-    df_2 = cleaning_second_df(df2)
-    df_3 = cleaning_third_df(df3)
-    
-    # print(df_1[100:120])
-    # print(" df1", type(df_1))
-    # print(" df2", type(df_2))
-    # print(" df3", type(df_3))
-    # Merge the three DataFrames
-    merged_df = pd.concat([df_1, df_2, df_3], ignore_index=True)
-    # merged_df['Age'] = merged_df['Age'].astype(str)
-    # column_nam = ["Gender", "FirstName", "LastName", "Email", "Age", "City", "Country"]
-    # merged_df = merged_df.reindex(columns=column_nam)
-    # merged_df.drop('Country', axis=1, inplace=True)
-    # Convert the merged DataFrame to CSV format
-    # merged_csv = merged_df.to_csv('merged.csv', index=False)
-    # print(merged_df[merged_df['City'].str.isalpha()==False])
-    
-    return merged_df
+    table2 = pd.read_csv(df2, delimiter=';', header=None)
+    table2.rename(columns={0: 'Age', 1: 'City', 2: 'Gender', 4: 'Email', 3: 'Name'}, inplace=True)
+    table2['FirstName'] = table2['Name'].apply(lambda x: x.split()[0])
+    table2['LastName'] = table2['Name'].apply(lambda x: x.split()[1])
+    table2['Country'] = "USA"
+    table2 = table2[['Gender', 'FirstName', 'LastName', 'Email', 'Age', 'City', 'Country']]
+    data2 = clean_data(table2)
 
-# Example usage
-# content_database_1 = "only_wood_customer_us_1.csv"
-# content_database_2 = "only_wood_customer_us_2.csv"
-# content_database_3 = "only_wood_customer_us_3.csv"
+    table3 = pd.read_csv(df3, delimiter='\t', skiprows=1, header=None)
+    table3.rename(columns={0: 'Gender', 1: 'Name', 2: 'Email', 3: 'Age', 4: 'City', 5: 'Country'}, inplace=True)
+    table3['FirstName'] = table3['Name'].apply(lambda x: x.split()[0])
+    table3['LastName'] = table3['Name'].apply(lambda x: x.split()[1])
+    table3 = table3[['Gender', 'FirstName', 'LastName', 'Email', 'Age', 'City', 'Country']]
+    data3 = clean_data(table3)
 
-# merged_df = my_m_and_a(content_database_1, content_database_2, content_database_3)
-# my_ds_babel.csv_to_sql(merged_df, 'plastic_free_boutique.sql', 'customers')
+    full_data = pd.concat([data1, data2, data3], ignore_index=True)
+    return full_data

@@ -1,58 +1,28 @@
 import sqlite3
-import pandas as pd
 import csv
-from io import StringIO
-
+import pandas as pd 
 
 def sql_to_csv(database, table_name):
-    # Connect to SQLite database
-    conn = sqlite3.connect(database)
-    cursor = conn.cursor()
+    connection = sqlite3.connect(database)
+    curs = connection.cursor()
+    select = f"SELECT * FROM {table_name};"
+    request = pd.read_sql_query(select, connection)
+    request.to_csv("list_fault_lines.csv", index=False)
+    with open("list_fault_lines.csv", "r") as file:
+        all_results = file.read()
+    return all_results[:-1]
 
-    # Fetch data from the table
-    cursor.execute(f"SELECT * FROM {table_name}")
-    rows = cursor.fetchall()
-
-    # Get column names
-    column_names = [description[0] for description in cursor.description]
-
-    # Create CSV content
-    csv_content = StringIO()
-    csv_writer = csv.writer(csv_content)
-    
-    # Write header
-    csv_writer.writerow(column_names)
-
-    # Write data rows
-    csv_writer.writerows(rows)
-
-    # Close database connection
-    conn.close()
-
-    return csv_content.getvalue()
-
-def csv_to_sql(csv_content1, database, table_name):
-    # Connect to SQLite database
-    csv_content = csv_content1.read()
-    conn = sqlite3.connect(database)
-    cursor = conn.cursor()
-
-    # Read CSV content
-    csv_reader = csv.reader(StringIO(csv_content))
-
-    # Get column names from header
-    columns = next(csv_reader)
-
-    # Create table
-    create_table_query = f"CREATE TABLE {table_name} ({', '.join(f'`{col}`' for col in columns)})"
-    cursor.execute(create_table_query)
-
-    # Insert data into the table
-    for row in csv_reader:
-        insert_query = f"INSERT INTO {table_name} VALUES ({', '.join(['?']*len(row))})"
-        cursor.execute(insert_query, row)
-
-    # Commit the changes and close the database connection
-    conn.commit()
-    conn.close()
-
+def csv_to_sql(csv_content, database, table_name):
+    for_description = []
+    csv_read = pd.read_csv(csv_content)
+    for_iloc = csv_read.iloc[:].values
+    connected = sqlite3.connect(database)
+    curs = connected.cursor()
+    curs.execute(f"CREATE TABLE {table_name} ('Volcano Name', 'Country', 'Type', 'Latitude (dd)', 'Longitude (dd)', 'Elevation (m)')")
+    curs.executemany(f"INSERT INTO {table_name} VALUES (?, ?, ?, ?, ?, ?)", for_iloc)
+    connected.commit()
+    curs.execute(f"SELECT * FROM {table_name}")
+    for i in curs.description:
+        for_description.append(i)
+    connected.close()
+    return for_description
